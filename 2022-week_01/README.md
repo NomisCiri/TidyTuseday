@@ -79,7 +79,7 @@ GDP2$Country.Code=factor(GDP2$Country.Code,levels=GDP2$Country.Code[order(GDP2$m
 # 
 
 ``` r
-figure<-GDP2%>%
+GDP2%>%
   ggplot(aes(y=Country.Code,x=mGDP))+
   geom_point()+
   geom_errorbarh(aes(xmin=mGDP-sem,xmax=mGDP+sem))+
@@ -91,10 +91,17 @@ figure<-GDP2%>%
   ggtitle("Your favorite Blackrock ETFcompared to Country GDP",subtitle="iShares Core MSCI World UCITS ETF")+
   theme_cowplot(14)+
   theme(axis.text.y=element_text(size=4))
+```
+
+![](Spannend_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
 #ggsave("fun.png",width = 7,height=10)
 ```
 
 # A nicer y axis
+
+Its better to show percentrank
 
 ``` r
 GDP2%>%arrange(mGDP)%>%
