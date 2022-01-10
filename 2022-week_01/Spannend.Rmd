@@ -5,7 +5,7 @@ date: "1/9/2022"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup}
 pacman::p_load(tidyverse,viridis,magrittr,RColorBrewer,cowplot)
 
 knitr::opts_chunk$set(echo = TRUE)
@@ -38,7 +38,7 @@ As i have no idea how much 47055706319 USD really is, we need a scale to compreh
 a dataset that contains [all contries' GDPs](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD) and visually relate 
 them the capital of the ETF. This file contains summaries as well, i clean them.
 
-```{r pressure, echo=FALSE}
+```{r}
 numextract <- function(string){ 
   str_extract(string, "\\-*\\d+\\.*\\d*")
 } 

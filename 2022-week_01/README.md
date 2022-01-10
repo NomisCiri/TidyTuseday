@@ -3,6 +3,25 @@ How Bad is it really
 Simon
 1/9/2022
 
+``` r
+pacman::p_load(tidyverse,viridis,magrittr,RColorBrewer,cowplot)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+
+# Blackrock?
+Anlagesumme=45467144553
+Streumunition_landminen=(0.52/100)*Anlagesumme
+Atomwaffen=(0.5/100)*Anlagesumme
+ZivileWaffen=(0.23/100)*Anlagesumme
+Tabak=(0.62/100)*Anlagesumme
+UN_GloablCompactViolation=(0.82/100)*Anlagesumme
+Kohle=(0.11/100)*Anlagesumme
+Ölsand=(0.24/100)*Anlagesumme
+
+total=Streumunition_landminen+Atomwaffen+ZivileWaffen+Tabak+UN_GloablCompactViolation+Kohle+Ölsand
+```
+
 # About
 
 In this document i explore how much the capital in one of the most
@@ -25,6 +44,25 @@ comprehend these numbers, so i downloaded a dataset that contains [all
 contries’ GDPs](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD) and
 visually relate them the capital of the ETF. This file contains
 summaries as well, i clean them.
+
+``` r
+numextract <- function(string){ 
+  str_extract(string, "\\-*\\d+\\.*\\d*")
+} 
+#opearater that returns true for any value that is not in a list
+`%notin%` <- Negate(`%in%`)
+
+
+GDP<-read.csv("GDPDATA.csv",skip = 4)%>%
+  pivot_longer(cols=starts_with("X"),names_to = "Year",values_to = "GDP")%>%
+  mutate(GDP=GDP/10^9,Year=as.numeric(numextract(Year)))#show in Billion. (Milliarden)
+#There are a couple of wierd cases or summaries in there. Filter them out.
+
+Odd_Cases=read.csv(file ="odd_ones.csv",header=T)#%>%filter(Odd_Codes!="LIC" & Odd_Codes!="HPC")
+  #leave low income in
+
+GDP%<>%filter(Country.Code %notin% Odd_Cases$Odd_Codes)
+```
 
 ``` r
 Code_breaks=GDP$Country.Code%>%unique()
@@ -65,7 +103,7 @@ plot_grid(GDPPlot,legend, rel_widths = c(1,0.3))
 
     ## Warning: Removed 512 row(s) containing missing values (geom_path).
 
-![](Spannend_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](Spannend_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 GDP%>%filter(Year>1990)%>%group_by(Country.Code)%>%
@@ -93,7 +131,7 @@ GDP2%>%
   theme(axis.text.y=element_text(size=4))
 ```
 
-![](Spannend_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](Spannend_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 #ggsave("fun.png",width = 7,height=10)
@@ -119,7 +157,7 @@ GDP2%>%arrange(mGDP)%>%
   theme_minimal(14)
 ```
 
-![](Spannend_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](Spannend_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
   #theme(axis.text.y=element_text(siz))
