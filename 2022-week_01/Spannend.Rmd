@@ -96,6 +96,7 @@ GDPPlot<-GDP%>%filter(Year>1990)%>%
 ```{r fig.height=3,fig.width=4}
 plot_grid(GDPPlot,legend, rel_widths = c(1,0.3))
 ```
+
 ```{r}
 GDP%>%filter(Year>1990)%>%group_by(Country.Code)%>%
   summarize(mGDP=mean(GDP,na.rm=T),
@@ -109,7 +110,7 @@ GDP2$Country.Code=factor(GDP2$Country.Code,levels=GDP2$Country.Code[order(GDP2$m
 # 
 
 ```{r fig.width=5,fig.height=10}
-figure<-GDP2%>%
+GDP2%>%
   ggplot(aes(y=Country.Code,x=mGDP))+
   geom_point()+
   geom_errorbarh(aes(xmin=mGDP-sem,xmax=mGDP+sem))+
@@ -125,6 +126,7 @@ figure<-GDP2%>%
 ```
 
 # A nicer y axis
+Its better to show percentrank
 ```{r}
 GDP2%>%arrange(mGDP)%>%
   mutate(percent=percent_rank(mGDP))%>%
