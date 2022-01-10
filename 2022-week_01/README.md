@@ -89,7 +89,7 @@ GDP2%>%
   annotate(geom = "text", x = Anlagesumme/10^9-37, y=220, label="Total sum invested",color="blue")+
   annotate(geom = "text", x = (total/10^9)-1.25,y=200, label="Sum invested in morally\nrepugnant buisnesses",color="red")+
   ggtitle("Your favorite Blackrock ETFcompared to Country GDP",subtitle="iShares Core MSCI World UCITS ETF")+
-  theme_cowplot(14)+
+  theme_cowplot(20)+
   theme(axis.text.y=element_text(size=4))
 ```
 
