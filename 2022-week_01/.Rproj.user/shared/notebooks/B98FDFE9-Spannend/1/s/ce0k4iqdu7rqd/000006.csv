@@ -1,7 +1,0 @@
-"0","GDP%>%filter(Year>1990)%>%group_by(Country.Code)%>%"
-"0","  summarize(mGDP=mean(GDP,na.rm=T),"
-"0","            sem=sd(GDP,na.rm=T)/sqrt(n()))%>%filter(!is.na(mGDP))->GDP2"
-"0",""
-"0","    #arrange(mGDP)%>%"
-"0","GDP2$Country.Code=factor(GDP2$Country.Code,levels=GDP2$Country.Code[order(GDP2$mGDP)])"
-"0",""
